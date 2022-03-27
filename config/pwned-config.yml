@@ -1,0 +1,25 @@
+password:
+  length:
+    enabled: true
+    min: 10
+    max: 15
+  symbols:
+    enabled: true  
+    allowSymbols: true
+    allowedSymbols: "~!@#$^&*()_-+={}[]|:;<>,.?/%"
+    min: 1
+  numbers: 
+    enabled: true 
+    allowNumbers: true
+    onlyNumbers: false
+    min: 1
+  case:
+    enabled: true  
+    onlyUpper: false
+    onlyLower: false
+    minLower: 5
+    minUpper: 2
+pwned:
+    enabled: true
+    timeoutSeconds: 2
+    url: "https://api.pwnedpasswords.com/range/"

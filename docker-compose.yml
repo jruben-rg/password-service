@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.34.0
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prom-config:/etc/prometheus/
+    restart: always
+
+  go-pwned:
+    container_name: go-pwned
+    build: go-pwned/
+    depends_on:
+      - prometheus
+    volumes:
+      - ./config/pwned-config.yml:/conf.yml
+    ports:
+      - 2112:2112
+    command: [/conf.yml]
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:8.2.6
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning/dashboards/:/etc/grafana/provisioning/dashboards/
+      - ./grafana/provisioning/datasources/:/etc/grafana/provisioning/datasources/
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
